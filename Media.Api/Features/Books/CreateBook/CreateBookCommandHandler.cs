@@ -23,7 +23,7 @@ public sealed class CreateBookCommandHandler : IRequestHandler<CreateBookCommand
 
         _db.Books.Add(book);
 
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken);
 
         return book.Adapt<CreateBookResponse>();
     }
