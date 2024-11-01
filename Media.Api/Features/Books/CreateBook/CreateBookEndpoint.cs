@@ -22,7 +22,7 @@ public sealed class CreateBookEndpoint : Endpoint<CreateBookRequest, CreateBookR
             new CreateBookCommand
             {
                 Request = req,
-            });
+            }, ct);
 
         await SendAsync(response, cancellation: ct);
     }
