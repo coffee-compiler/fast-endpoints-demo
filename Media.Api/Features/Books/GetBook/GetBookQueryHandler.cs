@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Media.Api.Features.Books.GetBook;
 
-public sealed class GetBookCommandHandler : IRequestHandler<GetBookCommand, GetBookResponse>
+public sealed class GetBookQueryHandler : IRequestHandler<GetBookQuery, GetBookResponse>
 {
     private readonly AppDbContext _db;
 
-    public GetBookCommandHandler(AppDbContext db)
+    public GetBookQueryHandler(AppDbContext db)
         => _db = db;
 
-    public async Task<GetBookResponse> Handle(GetBookCommand request, CancellationToken cancellationToken)
+    public async Task<GetBookResponse> Handle(GetBookQuery request, CancellationToken cancellationToken)
     {
         var book =
             await _db.Books

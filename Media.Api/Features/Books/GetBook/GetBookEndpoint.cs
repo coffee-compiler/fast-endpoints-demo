@@ -19,7 +19,7 @@ public sealed class GetBookEndpoint : Endpoint<GetBookRequest, GetBookResponse>
     public override async Task HandleAsync(GetBookRequest req, CancellationToken ct)
     {
         var response = await _sender.Send(
-            new GetBookCommand
+            new GetBookQuery
             {
                 Request = req,
             }, ct);
