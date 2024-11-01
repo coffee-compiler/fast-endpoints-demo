@@ -1,9 +1,15 @@
 ﻿using FastEndpoints;
+using MediatR;
 
 namespace Media.Api.Features.Books.CreateBook;
 
 public sealed class CreateBookEndpoint : Endpoint<CreateBookRequest, CreateBookResponse>
 {
+    private readonly IMediator _sender;
+
+    public CreateBookEndpoint(IMediator sender)
+        => _sender = sender;
+
     public override void Configure()
     {
         Post("/api/books");
@@ -12,11 +18,12 @@ public sealed class CreateBookEndpoint : Endpoint<CreateBookRequest, CreateBookR
 
     public override async Task HandleAsync(CreateBookRequest req, CancellationToken ct)
     {
-        await SendAsync(new CreateBookResponse
-        {
-            Id = Guid.NewGuid(),
-            Author = req.Author,
-            Title = req.Title,
-        });
+        var response = await _sender.Send(
+            new CreateBookCommand
+            {
+                Request = req,
+            });
+
+        await SendAsync(response, cancellation: ct);
     }
 }
