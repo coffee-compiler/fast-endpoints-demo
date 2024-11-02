@@ -11,6 +11,10 @@ public sealed class BookConfiguration : IEntityTypeConfiguration<Book>
     {
         builder.HasKey(b => b.Id);
 
+        builder.HasMany(b => b.Reviews)
+            .WithOne()
+            .HasForeignKey(r => r.BookId);
+
         builder.Property(b => b.Author)
             .IsRequired();
 
