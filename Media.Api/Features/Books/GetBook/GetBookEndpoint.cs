@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace Media.Api.Features.Books.GetBook;
 
 public sealed class GetBookEndpoint
-    : Endpoint<GetBookRequest, Results<Ok<GetBookResponse>, NotFound>>
+    : Endpoint<GetBookRequest, Results<Ok<GetBookResponse>, NotFound, BadRequest>>
 {
     private readonly IMediator _sender;
 

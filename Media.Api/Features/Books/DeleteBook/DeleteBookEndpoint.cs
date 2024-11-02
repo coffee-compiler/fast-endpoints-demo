@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace Media.Api.Features.Books.DeleteBook;
 
 public sealed class DeleteBookEndpoint
-    : Endpoint<DeleteBookRequest, Results<NoContent, BadRequest>>
+    : Endpoint<DeleteBookRequest, Results<NoContent, NotFound, BadRequest>>
 {
     private readonly IMediator _sender;
 
