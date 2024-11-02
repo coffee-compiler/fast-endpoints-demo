@@ -15,8 +15,8 @@ public sealed class GetBookEndpoint
 
     public override void Configure()
     {
-        Get("/api/books/{id:guid}");
-        AllowAnonymous();
+        Get("/books/{id:guid}");
+        Roles("Admin");
     }
 
     public override async Task HandleAsync(GetBookRequest req, CancellationToken ct)

@@ -15,8 +15,8 @@ public sealed class CreateBookEndpoint
 
     public override void Configure()
     {
-        Post("/api/books");
-        AllowAnonymous();
+        Post("/books");
+        Roles("Admin");
     }
 
     public override async Task HandleAsync(CreateBookRequest req, CancellationToken ct)
