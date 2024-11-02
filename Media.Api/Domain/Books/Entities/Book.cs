@@ -1,4 +1,5 @@
 ﻿using Media.Api.Domain.Books.Enums;
+using Media.Api.Domain.Core;
 
 namespace Media.Api.Domain.Books.Entities;
 
