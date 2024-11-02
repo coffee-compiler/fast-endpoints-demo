@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Media.Api.Domain.Books;
+using Media.Api.Domain.Books.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Media.Api.Data;

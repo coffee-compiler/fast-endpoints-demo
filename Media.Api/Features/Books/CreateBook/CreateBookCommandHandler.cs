@@ -1,7 +1,8 @@
 ﻿using Ardalis.Result;
 using Mapster;
 using Media.Api.Data;
-using Media.Api.Domain.Books;
+using Media.Api.Domain.Books.Entities;
+using Media.Api.Domain.Books.Enums;
 using MediatR;
 
 namespace Media.Api.Features.Books.CreateBook;
@@ -18,12 +19,10 @@ public sealed class CreateBookCommandHandler
         CreateBookCommand request,
         CancellationToken cancellationToken)
     {
-        var book = new Book
-        {
-            Id = Guid.NewGuid(),
-            Author = request.Request.Author,
-            Title = request.Request.Title,
-        };
+        var book = new Book(
+            request.Request.Author,
+            (BookGenre)Enum.Parse(typeof(BookGenre), request.Request.Genre),
+            request.Request.Title);
 
         _db.Books.Add(book);
 
