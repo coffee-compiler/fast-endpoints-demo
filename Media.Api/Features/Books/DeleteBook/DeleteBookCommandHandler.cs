@@ -21,7 +21,7 @@ public sealed class DeleteBookCommandHandler
                 b => b.Id == request.Request.Id,
                 cancellationToken);
 
-        if (book == null)
+        if (book is null)
         {
             return Result.NotFound();
         }
