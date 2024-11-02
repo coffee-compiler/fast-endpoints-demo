@@ -22,5 +22,7 @@ public sealed class Book : IAggregateRoot
 
     public BookGenre Genre { get; }
 
+    public List<BookReview> Reviews { get; } = [];
+
     public string Title { get; }
 }
