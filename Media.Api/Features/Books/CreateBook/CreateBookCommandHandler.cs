@@ -1,18 +1,22 @@
-﻿using Mapster;
+﻿using Ardalis.Result;
+using Mapster;
 using Media.Api.Data;
 using Media.Api.Domain.Books;
 using MediatR;
 
 namespace Media.Api.Features.Books.CreateBook;
 
-public sealed class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, CreateBookResponse>
+public sealed class CreateBookCommandHandler
+    : IRequestHandler<CreateBookCommand, Result<CreateBookResponse>>
 {
     private readonly AppDbContext _db;
 
     public CreateBookCommandHandler(AppDbContext db)
         => _db = db;
 
-    public async Task<CreateBookResponse> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CreateBookResponse>> Handle(
+        CreateBookCommand request,
+        CancellationToken cancellationToken)
     {
         var book = new Book
         {
@@ -25,6 +29,7 @@ public sealed class CreateBookCommandHandler : IRequestHandler<CreateBookCommand
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        return book.Adapt<CreateBookResponse>();
+        return Result.Created(
+            book.Adapt<CreateBookResponse>());
     }
 }

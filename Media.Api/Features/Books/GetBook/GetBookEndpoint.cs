@@ -1,9 +1,12 @@
-﻿using FastEndpoints;
+﻿using Ardalis.Result.AspNetCore;
+using FastEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Media.Api.Features.Books.GetBook;
 
-public sealed class GetBookEndpoint : Endpoint<GetBookRequest, GetBookResponse>
+public sealed class GetBookEndpoint
+    : Endpoint<GetBookRequest, Results<Ok<GetBookResponse>, NotFound>>
 {
     private readonly IMediator _sender;
 
@@ -24,6 +27,6 @@ public sealed class GetBookEndpoint : Endpoint<GetBookRequest, GetBookResponse>
                 Request = req,
             }, ct);
 
-        await SendAsync(response, cancellation: ct);
+        await SendResultAsync(response.ToMinimalApiResult());
     }
 }
