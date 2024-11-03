@@ -1,4 +1,6 @@
 ﻿using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
+using FluentValidation;
 using Media.Api.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +11,28 @@ public sealed class DeleteBookReviewCommandHandler
     : IRequestHandler<DeleteBookReviewCommand, Result>
 {
     private readonly AppDbContext _db;
+    private readonly IValidator<DeleteBookReviewCommand> _validator;
 
-    public DeleteBookReviewCommandHandler(AppDbContext db)
-        => _db = db;
+    public DeleteBookReviewCommandHandler(
+        AppDbContext db,
+        IValidator<DeleteBookReviewCommand> validator)
+    {
+        _db = db;
+        _validator = validator;
+    }
 
     public async Task<Result> Handle(DeleteBookReviewCommand request, CancellationToken cancellationToken)
     {
+        var validationRes =
+            await _validator.ValidateAsync(
+                request,
+                cancellationToken);
+
+        if(!validationRes.IsValid)
+        {
+            return Result.Invalid(validationRes.AsErrors());
+        }
+
         var book =
             await _db.Books
             .Include(r => r.Reviews)
