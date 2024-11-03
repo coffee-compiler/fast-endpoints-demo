@@ -1,4 +1,6 @@
 ﻿using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
+using FluentValidation;
 using Media.Api.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +11,30 @@ public sealed class GetBookReviewQueryHandler
     : IRequestHandler<GetBookReviewQuery, Result<GetBookReviewResponse>>
 {
     private readonly AppDbContext _db;
+    private readonly IValidator<GetBookReviewQuery> _validator;
 
-    public GetBookReviewQueryHandler(AppDbContext db)
-        => _db = db;
+    public GetBookReviewQueryHandler(
+        AppDbContext db,
+        IValidator<GetBookReviewQuery> validator)
+    {
+        _db = db;
+        _validator = validator;
+    }
 
     public async Task<Result<GetBookReviewResponse>> Handle(
         GetBookReviewQuery request,
         CancellationToken cancellationToken)
     {
+        var validationRes =
+            await _validator.ValidateAsync(
+                request,
+                cancellationToken);
+
+        if(!validationRes.IsValid)
+        {
+            return Result.Invalid(validationRes.AsErrors());
+        }
+
         var book =
             await _db.Books
             .Include(b => b.Reviews)
