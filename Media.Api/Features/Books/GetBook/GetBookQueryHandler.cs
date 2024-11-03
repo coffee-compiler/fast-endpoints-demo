@@ -1,4 +1,6 @@
 ﻿using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
+using FluentValidation;
 using Mapster;
 using Media.Api.Data;
 using MediatR;
@@ -10,14 +12,30 @@ public sealed class GetBookQueryHandler
     : IRequestHandler<GetBookQuery, Result<GetBookResponse>>
 {
     private readonly AppDbContext _db;
+    private readonly IValidator<GetBookQuery> _validator;
 
-    public GetBookQueryHandler(AppDbContext db)
-        => _db = db;
+    public GetBookQueryHandler(
+        AppDbContext db,
+        IValidator<GetBookQuery> validator)
+    {
+        _db = db;
+        _validator = validator;
+    }
 
     public async Task<Result<GetBookResponse>> Handle(
         GetBookQuery request,
         CancellationToken cancellationToken)
     {
+        var validationRes =
+            await _validator.ValidateAsync(
+                request,
+                cancellationToken);
+
+        if(!validationRes.IsValid)
+        {
+            return Result.Invalid(validationRes.AsErrors());
+        }
+
         var book =
             await _db.Books
             .AsNoTracking()
