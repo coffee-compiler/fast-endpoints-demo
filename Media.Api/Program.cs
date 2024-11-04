@@ -29,6 +29,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultExceptionHandler();
+
 app.UseFastEndpoints(c =>
 {
     c.Endpoints.RoutePrefix = "api";
