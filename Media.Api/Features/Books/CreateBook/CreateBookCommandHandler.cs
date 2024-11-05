@@ -47,6 +47,12 @@ public sealed class CreateBookCommandHandler
         await _db.SaveChangesAsync(cancellationToken);
 
         return Result.Created(
-            book.Adapt<CreateBookResponse>());
+            new CreateBookResponse
+            {
+                Id = book.Id,
+                Author = book.Author,
+                Genre = book.Genre.ToString(),
+                Title = book.Title,
+            });
     }
 }
