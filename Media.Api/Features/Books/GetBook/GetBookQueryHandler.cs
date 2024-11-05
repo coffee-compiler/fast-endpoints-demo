@@ -48,6 +48,11 @@ public sealed class GetBookQueryHandler
             return Result<GetBookResponse>.NotFound();
         }
 
-        return book.Adapt<GetBookResponse>();
+        return new GetBookResponse
+        {
+            Id = book.Id,
+            Author = book.Author,
+            Title = book.Title,
+        };
     }
 }
