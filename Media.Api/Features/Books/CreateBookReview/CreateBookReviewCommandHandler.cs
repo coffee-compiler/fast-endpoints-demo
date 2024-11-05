@@ -59,7 +59,7 @@ public sealed class CreateBookReviewCommandHandler
         var bookReview = new BookReview(
             book.Id,
             commentRes.Value,
-            (BookReviewRating)Enum.Parse(typeof(BookReviewRating), request.Request.Rating));
+            Enum.Parse<BookReviewRating>(request.Request.Rating));
 
         await _db.AddAsync(bookReview, cancellationToken);
 

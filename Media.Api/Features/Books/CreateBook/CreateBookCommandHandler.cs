@@ -38,7 +38,7 @@ public sealed class CreateBookCommandHandler
 
         var book = new Book(
             request.Request.Author,
-            (BookGenre)Enum.Parse(typeof(BookGenre), request.Request.Genre),
+            Enum.Parse<BookGenre>(request.Request.Genre),
             request.Request.Title);
 
         await _db.Books.AddAsync(book, cancellationToken);
