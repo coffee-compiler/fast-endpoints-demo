@@ -7,7 +7,9 @@ namespace Media.Api.Domain.Books.Entities;
 
 public sealed class BookReview : IEntity
 {
+#pragma warning disable CS8618 // Used by EF Core
     private BookReview()
+#pragma warning restore CS8618 
     {
     }
 
