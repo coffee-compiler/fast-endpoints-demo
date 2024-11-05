@@ -6,5 +6,7 @@ public sealed record GetBookResponse
 
     public string Author { get; init; } = string.Empty;
 
+    public string Genre { get; init; } = string.Empty;
+
     public string Title { get; init; } = string.Empty;
 }
