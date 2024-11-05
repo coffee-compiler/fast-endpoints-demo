@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using FluentValidation;
-using Mapster;
 using Media.Api.Data;
 using Media.Api.Domain.Books.Entities;
 using Media.Api.Domain.Books.Enums;

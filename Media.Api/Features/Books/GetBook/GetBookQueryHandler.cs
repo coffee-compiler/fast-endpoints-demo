@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using FluentValidation;
-using Mapster;
 using Media.Api.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
