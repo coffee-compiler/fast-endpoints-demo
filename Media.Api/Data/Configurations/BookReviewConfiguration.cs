@@ -24,7 +24,7 @@ public sealed class BookReviewConfiguration : IEntityTypeConfiguration<BookRevie
         builder.Property(r => r.Rating)
              .HasConversion(
                 r => r.ToString(),
-                r => (BookReviewRating)Enum.Parse(typeof(BookReviewRating), r))
+                r => Enum.Parse<BookReviewRating>(r))
             .IsRequired();
     }
 }

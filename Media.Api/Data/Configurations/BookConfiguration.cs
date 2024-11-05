@@ -21,7 +21,7 @@ public sealed class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(b => b.Genre)
             .HasConversion(
                 g => g.ToString(),
-                g => (BookGenre)Enum.Parse(typeof(BookGenre), g))
+                g => Enum.Parse<BookGenre>(g))
             .IsRequired();
 
         builder.Property(b => b.Title)
